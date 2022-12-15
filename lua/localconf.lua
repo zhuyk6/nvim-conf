@@ -1,14 +1,14 @@
 -- show line number
 vim.o.number = true
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- allows neovim to access the system clipboard
 vim.o.clipboard = "unnamedplus"
 
 -- set tab 
+vim.o.expandtab = true  -- tab to space
 vim.o.tabstop = 4       -- tab length
 vim.o.shiftwidth = 4
-vim.o.expandtab = true  -- tab to space
 
 -- use mouse
 vim.o.mouse = 'a'
@@ -18,13 +18,29 @@ vim.o.cursorline = true
 
 -- set search result highlight
 vim.o.hlsearch = true
+-- ignore case in search patterns
+vim.opt.ignorecase = true
+-- Override the 'ignorecase' option if the search pattern contains upper case characters.
+vim.opt.smartcase = true
 
 -- set smart indent
 vim.o.smartindent = true
 
+-- completion mode
+vim.opt.completeopt = { "menuone", "noselect" }
+
+-- encoding written to a file
+vim.opt.fileencoding = "uft-8"
+
+
 -- theme
+vim.o.termguicolors = true
 vim.o.background = "dark"
-vim.cmd[[colorscheme tokyonight]]
+
+local ok, _ = pcall(require, "tokyonight")
+if ok then
+    vim.cmd[[colorscheme tokyonight]]
+end
 
 -- -- use vscode theme
 -- vim.o.background = 'dark'
