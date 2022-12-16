@@ -1,3 +1,6 @@
+-- GUI font
+vim.opt.guifont = { "Fira Code", ":h12" }
+
 -- show line number
 vim.o.number = true
 vim.o.relativenumber = true
