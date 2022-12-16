@@ -50,8 +50,7 @@ map('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', 
 map('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
 
 -- Git
--- map("n", "<leader>g", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opt)
-map("n", "<leader>g", "<cmd>lua _GITUI_TOGGLE()<CR>", opt)
+map("n", "<leader>g", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opt)
 
 -- Telescope
 map("n", "<leader>ff", ":Telescope find_files<CR>", opt)
