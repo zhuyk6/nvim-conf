@@ -48,23 +48,24 @@ return packer.startup(function(use)
     use "nvim-lua/plenary.nvim"     -- Used by many lua plugins
 
     -- Coding
+    use "max397574/better-escape.nvim"
     use {
         "windwp/nvim-autopairs",
         config = function ()
-            require("conf.autopairs")
+            require("zhuyk6.conf.autopairs")
         end,
     }
     use {
         'numToStr/Comment.nvim',                        -- Comment plugin
         config = function()
-            require('conf.Comment')
+            require('zhuyk6.conf.Comment')
         end
     }
     use 'JoosepAlviste/nvim-ts-context-commentstring'   -- for tsx/jsx comment
     use {
         "lukas-reineke/indent-blankline.nvim",          -- indentation guides
         config = function()
-            require("conf.indentline")
+            require("zhuyk6.conf.indentline")
         end
     }
     use {
@@ -88,6 +89,7 @@ return packer.startup(function(use)
     use "saadparwaiz1/cmp_luasnip"  -- snippet completions
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-nvim-lua"
+    use "onsails/lspkind.nvim"      -- adds vscode-like pictograms to neovim built-in lsp
 
     -- snippets
     use "L3MON4D3/LuaSnip"              --snippet engine
@@ -102,13 +104,13 @@ return packer.startup(function(use)
     use {
         "jose-elias-alvarez/null-ls.nvim",      -- Linter and formatter
         config = function()
-            require("conf.null-ls-conf")
+            require("zhuyk6.conf.null-ls-conf")
         end,
     }
     use {
         "RRethy/vim-illuminate",
         config = function()
-            require("conf.illuminate")
+            require("zhuyk6.conf.illuminate")
         end
     }
 
@@ -116,14 +118,21 @@ return packer.startup(function(use)
     use {
         "nvim-treesitter/nvim-treesitter",
         config = function()
-            require("conf.treesitter-conf")
+            require("zhuyk6.conf.treesitter-conf")
         end
     }
     -- Telescope
     use {
         'nvim-telescope/telescope.nvim',
         config = function()
-            require("conf.telescope")
+            require("zhuyk6.conf.telescope")
+        end
+    }
+    -- Which-key
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            require("which-key").setup()
         end
     }
 
@@ -144,22 +153,28 @@ return packer.startup(function(use)
     use {
         'nvim-tree/nvim-tree.lua',              -- File explorer
         config = function()
-            require("conf.nvim-tree")
+            require("zhuyk6.conf.nvim-tree")
         end
     }
     use {
         "akinsho/toggleterm.nvim", tag = '*',   -- terminal
         config = function()
-            require("conf.toggleterm")
+            require("zhuyk6.conf.toggleterm")
         end
     }
     use {
         'akinsho/bufferline.nvim', tag = "v3.*",-- bufferline
         config = function()
-            require("conf.bufferline")
+            require("zhuyk6.conf.bufferline")
         end
     }
     use "moll/vim-bbye"                         -- Close buffer 
+    use {
+        "rcarriga/nvim-notify",
+        config = function()
+            vim.notify = require("notify")
+        end
+    }
 
     -- vscode theme
     use 'Mofiqul/vscode.nvim'
@@ -170,7 +185,7 @@ return packer.startup(function(use)
     use {
         'nvim-lualine/lualine.nvim',
         config = function()
-            require('conf.lualine-conf')
+            require('zhuyk6.conf.lualine-conf')
         end
     }
 

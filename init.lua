@@ -1,13 +1,15 @@
 -- Speed up loading Lua modules in Neovim to improve startup time.
 require("impatient").enable_profile()
 
-require("localconf")
+require("zhuyk6.localconf")
 
-require("keymaps")
+require("zhuyk6.keymaps")
 
-require("plugins")
+require("zhuyk6.plugins")
 
-require("cmp-conf")
+require("zhuyk6.cmp-conf")
 
-require("lsp")
+require("zhuyk6.lsp")
+
+require("zhuyk6.utils")
 

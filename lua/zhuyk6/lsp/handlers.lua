@@ -69,7 +69,7 @@ end
 -- 	keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 -- end
 
-local lsp_keymaps = require("keymaps").lsp_keymaps
+local lsp_keymaps = require("zhuyk6.keymaps").lsp_keymaps
 
 M.on_attach = function(client, bufnr)
 	if client.name == "tsserver" then

@@ -35,7 +35,7 @@ local opts = {
 		client.resolved_capabilities.document_range_formatting = false
 
 		-- 绑定快捷键
-		require("keymaps").lsp_keymaps(bufnr)
+		require("zhuyk6.keymaps").lsp_keymaps(bufnr)
 		-- 保存时自动格式化
 		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
 	end,
