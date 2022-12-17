@@ -81,6 +81,20 @@ return packer.startup(function(use)
             vim.g.barbaric_fcitx_cmd = "fcitx5-remote"
         end
     }
+    use {
+        "ggandor/leap.nvim",
+        config = function()
+            require('leap').add_default_mappings()
+        end
+    }
+    use {
+        "kylechui/nvim-surround",
+        config = function()
+            require("nvim-surround").setup({
+                -- Configuration here, or leave empty to use defaults
+            })
+        end
+    }
 
     -- LSP completion
     use "hrsh7th/nvim-cmp"          -- The completion plugin
@@ -126,13 +140,6 @@ return packer.startup(function(use)
         'nvim-telescope/telescope.nvim',
         config = function()
             require("zhuyk6.conf.telescope")
-        end
-    }
-    -- Which-key
-    use {
-        "folke/which-key.nvim",
-        config = function()
-            require("which-key").setup()
         end
     }
 

@@ -5,8 +5,6 @@ vim.g.maplocalleader = " "
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
-local wk = require("which-key")
-
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",
@@ -61,35 +59,15 @@ map("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 map('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', {noremap=true})
 map('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
 
--- wk.register({
---     ["<a-n>"] = {
---         "<cmd>lua require('illuminate').next_reference{wrap=true}<CR>",
---         "Illuminate Next Reference",
---     },
---     ["<a-p>"] = {
---         "<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<CR>",
---         "Illuminate Last Reference",
---     }
--- })
-
+-- Git
+map("n", "<leader>g", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
 
 -- Telescope
--- map("n", "<leader>ff", ":Telescope find_files<CR>", opt)
--- map("n", "<leader>fg", ":Telescope live_grep<CR>", opt)
--- map("n", "<leader>fb", ":Telescope buffers<CR>", opt)
--- map("n", "<leader>fh", ":Telescope help_tags<CR>", opt)
--- map("n", "<leader>fp", ":Telescope projects<CR>", opt)
-wk.register({
-    ["<leader>f"] = {
-        name = "+file",
-        f = {"<cmd>Telescope find_files<cr>", "Find File"},
-        g = {"<cmd>Telescope live_grep<cr>", "Live Grep"},
-        r = {"<cmd>Telescope oldfiles<cr>", "Open Recent File"},
-        n = {"<cmd>enew<cr>", "New File"},
-    },
-    -- Git
-    ["<leader>g"] = {"<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit"},
-})
+map("n", "<leader>ff", ":Telescope find_files<CR>", opts)
+map("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
+map("n", "<leader>fb", ":Telescope buffers<CR>", opts)
+map("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
+map("n", "<leader>fp", ":Telescope projects<CR>", opts)
 
 local pluginKeys = {}
 
@@ -117,7 +95,7 @@ pluginKeys.lsp_keymaps = function(bufnr)
     mapbuf("n", "gj", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
     -- format
-    mapbuf("n", "<leader>f", "<cmd>lua vim.lsp.buf.format{ async = true }<CR>", {noremap = true})
+    mapbuf("n", "<leader>ff", "<cmd>lua vim.lsp.buf.format{ async = true }<CR>", {noremap = true})
 end
 
 return pluginKeys
