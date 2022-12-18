@@ -33,6 +33,8 @@ for _, server in pairs(servers) do
 	}
     if server == "clangd" then
         opts.capabilities.offsetEncoding = "utf-8"
+    else
+        opts.capabilities.offsetEncoding = {"utf-8"}
     end
 
 	server = vim.split(server, "@")[1]

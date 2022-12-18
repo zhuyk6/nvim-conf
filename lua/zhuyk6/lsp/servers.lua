@@ -7,6 +7,7 @@ local servers = {
 --	"jsonls",
 --	"yamlls",
     "clangd",
+    "texlab",
 }
 
 return servers
