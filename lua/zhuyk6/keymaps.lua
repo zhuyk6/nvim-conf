@@ -1,3 +1,7 @@
+local legendary = require("legendary")
+local builtin = require("telescope.builtin")
+local illuminate = require("illuminate")
+
 -- set space as leader
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -56,21 +60,55 @@ map("v", ">", ">gv", opts)
 
 -- Plugins --
 -- nvim-tree
-map("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+-- map("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
 -- illuminate
-map('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', {noremap=true})
-map('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
+-- map('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', {noremap=true})
+-- map('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
 
 -- Git
-map("n", "<leader>g", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
+-- map("n", "<leader>g", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
 
 -- Telescope
-map("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-map("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
-map("n", "<leader>fb", ":Telescope buffers<CR>", opts)
-map("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
-map("n", "<leader>fp", ":Telescope projects<CR>", opts)
+-- map("n", "<leader>ff", ":Telescope find_files<CR>", opts)
+-- map("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
+-- map("n", "<leader>fb", ":Telescope buffers<CR>", opts)
+-- map("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
+-- map("n", "<leader>fp", ":Telescope projects<CR>", opts)
+
+legendary.setup({
+    keymaps = {
+        -- Telescope functions
+        {"<leader>ff", builtin.find_files, description="Find files"},
+        {"<leader>fr", builtin.oldfiles, description="Recent files"},
+        {"<leader>fg", builtin.live_grep, description="Live grep"},
+        {"<leader>fs", builtin.grep_string, description="Grep string under cursor"},
+        {"<leader>fh", builtin.help_tags, description="Help tags"},
+
+        -- Git 
+        {"<leader>g", _LAZYGIT_TOGGLE, description="Lazygit"},
+
+        -- Illuminate 
+        {
+            "<a-n>",
+            function()
+                illuminate.next_reference({wrap=true})
+            end,
+            opts={noremap=true},
+            description="Next References",
+        },
+        {
+            "<a-p>",
+            function()
+                illuminate.next_reference({reverse=true, wrap=true})
+            end,
+            opts={noremap=true},
+            description="Previous References",
+        },
+        {"<leader>e", ":NvimTreeToggle<CR>", description="File explorer"},
+
+    },
+})
 
 local pluginKeys = {}
 
@@ -98,7 +136,7 @@ pluginKeys.lsp_keymaps = function(bufnr)
     mapbuf("n", "gj", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
     -- format
-    mapbuf("n", "<leader>ff", "<cmd>lua vim.lsp.buf.format{ async = true }<CR>", {noremap = true})
+    -- mapbuf("n", "<leader>ff", "<cmd>lua vim.lsp.buf.format{ async = true }<CR>", {noremap = true})
 end
 
 return pluginKeys

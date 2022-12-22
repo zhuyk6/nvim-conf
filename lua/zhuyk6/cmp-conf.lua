@@ -9,9 +9,13 @@ if not snip_status_ok then
 end
 
 local snippets_path = vim.fn.stdpath("config") .. "/lua/snippets/"
-
+-- load vscode snippets defined in "rafamadriz/friendly-snippets"
 require("luasnip/loaders/from_vscode").lazy_load()
+-- load user defined snippets.
 require("luasnip.loaders.from_lua").lazy_load({paths = snippets_path})
+-- markdown will use tex snippets.
+luasnip.filetype_extend("markdown", {"tex"})
+
 
 local check_backspace = function()
 	local col = vim.fn.col(".") - 1

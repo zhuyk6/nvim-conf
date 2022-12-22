@@ -1,4 +1,4 @@
-local languages = { "lua", "markdown", "markdown_inline", "bash", "python", "cpp" }
+local languages = { "lua", "markdown", "markdown_inline", "bash", "python", "cpp", "latex" }
 
 local configs = require "nvim-treesitter.configs"
 

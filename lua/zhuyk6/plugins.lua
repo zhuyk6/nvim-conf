@@ -95,6 +95,7 @@ return packer.startup(function(use)
             })
         end
     }
+    use 'mrjones2014/legendary.nvim'    -- keybindings
 
     -- LSP completion
     use "hrsh7th/nvim-cmp"          -- The completion plugin
@@ -182,6 +183,12 @@ return packer.startup(function(use)
             vim.notify = require("notify")
         end
     }
+    use {
+        'stevearc/dressing.nvim',               -- Improve the default vim.ui interfaces 
+        config = function()
+            require("zhuyk6.conf.dressing")
+        end
+    }
 
     -- vscode theme
     use 'Mofiqul/vscode.nvim'
@@ -202,6 +209,14 @@ return packer.startup(function(use)
         config = function ()
             require'alpha'.setup(require'alpha.themes.startify'.config)
         end
+    }
+
+    -- Markdown preview
+     use {
+        "iamcco/markdown-preview.nvim",
+        run = "cd app && npm install",
+        setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+        ft = { "markdown" },
     }
 
     -- Automatically set up your configuration after cloning packer.nvim
