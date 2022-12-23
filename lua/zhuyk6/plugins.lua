@@ -82,17 +82,23 @@ return packer.startup(function(use)
         end
     }
     use {
-        "ggandor/leap.nvim",
+        "ggandor/leap.nvim",    -- motion
         config = function()
             require('leap').add_default_mappings()
         end
     }
     use {
-        "kylechui/nvim-surround",
+        "kylechui/nvim-surround",   -- surround
         config = function()
             require("nvim-surround").setup({
                 -- Configuration here, or leave empty to use defaults
             })
+        end
+    }
+    use {
+        "RRethy/vim-illuminate",    -- Highlight the word under cursor
+        config = function()
+            require("zhuyk6.conf.illuminate")
         end
     }
     use 'mrjones2014/legendary.nvim'    -- keybindings
@@ -113,8 +119,9 @@ return packer.startup(function(use)
     -- LSP
     use {
         "neovim/nvim-lspconfig",
-        "williamboman/mason.nvim",              -- Easily install and manage LSP servers, DAP servers, linters, and formatters
+        "williamboman/mason.nvim",  -- Easily install and manage LSP servers, DAP servers, linters, and formatters
         "williamboman/mason-lspconfig.nvim",
+        'junnplus/lsp-setup.nvim',  -- Wrapper for nvim-lspconfig and mason-lspconfig
     }
     use {
         "jose-elias-alvarez/null-ls.nvim",      -- Linter and formatter
@@ -122,12 +129,8 @@ return packer.startup(function(use)
             require("zhuyk6.conf.null-ls-conf")
         end,
     }
-    use {
-        "RRethy/vim-illuminate",
-        config = function()
-            require("zhuyk6.conf.illuminate")
-        end
-    }
+    use "folke/neodev.nvim"             -- Lua
+    use "p00f/clangd_extensions.nvim"   -- Cpp
 
     -- Treesitter
     use {

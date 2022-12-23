@@ -38,9 +38,6 @@ for _, server in pairs(servers) do
     end
 
 	server = vim.split(server, "@")[1]
-
-    require("zhuyk6.lsp.settings.sumneko_lua")
-
 	local require_ok, conf_opts = pcall(require, "zhuyk6.lsp.settings." .. server)
 	if require_ok then
 		opts = vim.tbl_deep_extend("force", conf_opts, opts)
