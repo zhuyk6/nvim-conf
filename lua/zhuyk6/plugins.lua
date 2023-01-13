@@ -44,51 +44,51 @@ packer.init {
 return packer.startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
-    use 'lewis6991/impatient.nvim'  -- Speed up loading Lua modules in Neovim to improve startup time.
-    use "nvim-lua/plenary.nvim"     -- Used by many lua plugins
+    use 'lewis6991/impatient.nvim' -- Speed up loading Lua modules in Neovim to improve startup time.
+    use "nvim-lua/plenary.nvim" -- Used by many lua plugins
 
     -- Coding
     use "max397574/better-escape.nvim"
     use {
         "windwp/nvim-autopairs",
-        config = function ()
+        config = function()
             require("zhuyk6.conf.autopairs")
         end,
     }
     use {
-        'numToStr/Comment.nvim',                        -- Comment plugin
+        'numToStr/Comment.nvim', -- Comment plugin
         config = function()
             require('zhuyk6.conf.Comment')
         end
     }
-    use 'JoosepAlviste/nvim-ts-context-commentstring'   -- for tsx/jsx comment
+    use 'JoosepAlviste/nvim-ts-context-commentstring' -- for tsx/jsx comment
     use {
-        "lukas-reineke/indent-blankline.nvim",          -- indentation guides
+        "lukas-reineke/indent-blankline.nvim", -- indentation guides
         config = function()
             require("zhuyk6.conf.indentline")
         end
     }
     use {
-        "norcalli/nvim-colorizer.lua",                      -- colorizer
+        "norcalli/nvim-colorizer.lua", -- colorizer
         config = function()
             require("colorizer").setup()
         end
     }
     use {
-        "rlue/vim-barbaric",    -- switch to English input method when goto Normal mode
+        "rlue/vim-barbaric", -- switch to English input method when goto Normal mode
         config = function()
             vim.g.barbaric_ime = "fcitx"
             vim.g.barbaric_fcitx_cmd = "fcitx5-remote"
         end
     }
     use {
-        "ggandor/leap.nvim",    -- motion
+        "ggandor/leap.nvim", -- motion
         config = function()
             require('leap').add_default_mappings()
         end
     }
     use {
-        "kylechui/nvim-surround",   -- surround
+        "kylechui/nvim-surround", -- surround
         config = function()
             require("nvim-surround").setup({
                 -- Configuration here, or leave empty to use defaults
@@ -96,41 +96,59 @@ return packer.startup(function(use)
         end
     }
     use {
-        "RRethy/vim-illuminate",    -- Highlight the word under cursor
+        "RRethy/vim-illuminate", -- Highlight the word under cursor
         config = function()
             require("zhuyk6.conf.illuminate")
         end
     }
-    use 'mrjones2014/legendary.nvim'    -- keybindings
+    -- which key
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+            require("which-key").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            }
+        end
+    }
+    use 'mrjones2014/legendary.nvim' -- keybindings
 
     -- LSP completion
-    use "hrsh7th/nvim-cmp"          -- The completion plugin
-    use "hrsh7th/cmp-buffer"        -- buffer completions
-    use "hrsh7th/cmp-path"          -- path completions
-    use "saadparwaiz1/cmp_luasnip"  -- snippet completions
+    use "hrsh7th/nvim-cmp" -- The completion plugin
+    use "hrsh7th/cmp-buffer" -- buffer completions
+    use "hrsh7th/cmp-path" -- path completions
+    use "saadparwaiz1/cmp_luasnip" -- snippet completions
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-nvim-lua"
-    use "onsails/lspkind.nvim"      -- adds vscode-like pictograms to neovim built-in lsp
+    use "onsails/lspkind.nvim" -- adds vscode-like pictograms to neovim built-in lsp
 
     -- snippets
-    use "L3MON4D3/LuaSnip"              --snippet engine
-    use "rafamadriz/friendly-snippets"  -- a bunch of snippets to use
+    use "L3MON4D3/LuaSnip" --snippet engine
+    use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
     -- LSP
     use {
         "neovim/nvim-lspconfig",
-        "williamboman/mason.nvim",  -- Easily install and manage LSP servers, DAP servers, linters, and formatters
+        "williamboman/mason.nvim", -- Easily install and manage LSP servers, DAP servers, linters, and formatters
         "williamboman/mason-lspconfig.nvim",
-        'junnplus/lsp-setup.nvim',  -- Wrapper for nvim-lspconfig and mason-lspconfig
+        'junnplus/lsp-setup.nvim', -- Wrapper for nvim-lspconfig and mason-lspconfig
     }
+    -- Linter and formatter
     use {
-        "jose-elias-alvarez/null-ls.nvim",      -- Linter and formatter
+        "jose-elias-alvarez/null-ls.nvim",
         config = function()
             require("zhuyk6.conf.null-ls-conf")
         end,
     }
-    use "folke/neodev.nvim"             -- Lua
-    use "p00f/clangd_extensions.nvim"   -- Cpp
+    -- DAP
+    use 'mfussenegger/nvim-dap'
+    -- Language settings
+    use "folke/neodev.nvim" -- Lua
+    use "p00f/clangd_extensions.nvim" -- Cpp
+    use 'simrat39/rust-tools.nvim' -- Rust
 
     -- Treesitter
     use {
@@ -147,39 +165,39 @@ return packer.startup(function(use)
         end
     }
 
---    -- LSP saga 
---    use {
---        "glepnir/lspsaga.nvim",
---        branch = "main",
---        config = function()
---            local saga = require("lspsaga")
---            saga.init_lsp_saga({
---                -- your configuration
---            })
---        end,
---    }
+    --    -- LSP saga
+    --    use {
+    --        "glepnir/lspsaga.nvim",
+    --        branch = "main",
+    --        config = function()
+    --            local saga = require("lspsaga")
+    --            saga.init_lsp_saga({
+    --                -- your configuration
+    --            })
+    --        end,
+    --    }
 
-    -- UI 
-    use 'kyazdani42/nvim-web-devicons'          -- icons and colors
+    -- UI
+    use 'kyazdani42/nvim-web-devicons' -- icons and colors
     use {
-        'nvim-tree/nvim-tree.lua',              -- File explorer
+        'nvim-tree/nvim-tree.lua', -- File explorer
         config = function()
             require("zhuyk6.conf.nvim-tree")
         end
     }
     use {
-        "akinsho/toggleterm.nvim", tag = '*',   -- terminal
+        "akinsho/toggleterm.nvim", tag = '*', -- terminal
         config = function()
             require("zhuyk6.conf.toggleterm")
         end
     }
     use {
-        'akinsho/bufferline.nvim', tag = "v3.*",-- bufferline
+        'akinsho/bufferline.nvim', tag = "v3.*", -- bufferline
         config = function()
             require("zhuyk6.conf.bufferline")
         end
     }
-    use "moll/vim-bbye"                         -- Close buffer 
+    use "moll/vim-bbye" -- Close buffer
     use {
         "rcarriga/nvim-notify",
         config = function()
@@ -187,7 +205,7 @@ return packer.startup(function(use)
         end
     }
     use {
-        'stevearc/dressing.nvim',               -- Improve the default vim.ui interfaces 
+        'stevearc/dressing.nvim', -- Improve the default vim.ui interfaces
         config = function()
             require("zhuyk6.conf.dressing")
         end
@@ -209,13 +227,13 @@ return packer.startup(function(use)
     -- greeter for nvim
     use {
         'goolord/alpha-nvim',
-        config = function ()
-            require'alpha'.setup(require'alpha.themes.startify'.config)
+        config = function()
+            require 'alpha'.setup(require 'alpha.themes.startify'.config)
         end
     }
 
     -- Markdown preview
-     use {
+    use {
         "iamcco/markdown-preview.nvim",
         run = "cd app && npm install",
         setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
@@ -225,6 +243,6 @@ return packer.startup(function(use)
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
-      require("packer").sync()
+        require("packer").sync()
     end
 end)

@@ -8,9 +8,9 @@ vim.o.relativenumber = true
 -- allows neovim to access the system clipboard
 vim.o.clipboard = "unnamedplus"
 
--- set tab 
-vim.o.expandtab = true  -- tab to space
-vim.o.tabstop = 4       -- tab length
+-- set tab
+vim.o.expandtab = true -- tab to space
+vim.o.tabstop = 4 -- tab length
 vim.o.shiftwidth = 4
 
 -- use mouse
@@ -35,6 +35,9 @@ vim.opt.completeopt = { "menuone", "noselect" }
 -- encoding written to a file
 vim.opt.fileencoding = "uft-8"
 
+-- timeout
+vim.o.timeout = true
+vim.o.timeoutlen = 300
 
 -- theme
 vim.o.termguicolors = true
@@ -42,7 +45,7 @@ vim.o.background = "dark"
 
 local ok, _ = pcall(require, "tokyonight")
 if ok then
-    vim.cmd[[colorscheme tokyonight]]
+    vim.cmd [[colorscheme tokyonight]]
 end
 
 -- -- use vscode theme

@@ -19,10 +19,10 @@ local opts = { noremap = true, silent = true }
 
 -- Normal --
 -- Window navigation
-map("n", "<C-h>", "<C-w>h", opts)
-map("n", "<C-j>", "<C-w>j", opts)
-map("n", "<C-k>", "<C-w>k", opts)
-map("n", "<C-l>", "<C-w>l", opts)
+-- map("n", "<C-h>", "<C-w>h", opts)
+-- map("n", "<C-j>", "<C-w>j", opts)
+-- map("n", "<C-k>", "<C-w>k", opts)
+-- map("n", "<C-l>", "<C-w>l", opts)
 
 -- Resize with arrows
 map("n", "<C-Up>", ":resize -2<CR>", opts)
@@ -36,12 +36,12 @@ map("n", "<S-h>", ":bprevious<CR>", opts)
 map("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
 
 -- Insert --
--- Press jk fast to enter normal mode 
+-- Press jk fast to enter normal mode
 -- map("i", "jk", "<ESC>", opt)
 local ok, better_escape = pcall(require, "better_escape")
 if ok then
     better_escape.setup {
-        mapping = {"jk"}, -- a table with mappings to use
+        mapping = { "jk" }, -- a table with mappings to use
         timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
         clear_empty_lines = false, -- clear line after escaping if there is only whitespace
         keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
@@ -53,7 +53,7 @@ if ok then
 end
 
 -- Visual
--- Stay in indent mode 
+-- Stay in indent mode
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
@@ -76,43 +76,97 @@ map("v", ">", ">gv", opts)
 -- map("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
 -- map("n", "<leader>fp", ":Telescope projects<CR>", opts)
 
+local Terminal = require("toggleterm.terminal").Terminal
+-- lazygit
+local lazygit = Terminal:new({
+    cmd = "lazygit",
+    dir = "git_dir",
+    direction = "float",
+    float_opts = { border = "double" },
+    hidden = true,
+})
+
+local function _LAZYGIT_TOGGLE()
+    lazygit:toggle()
+end
+
+-- btop
+local btop = Terminal:new({
+    cmd = "btop",
+    direction = "float",
+    float_opts = { border = "double" },
+    hidden = true,
+})
+
+local function _BTOP_TOGGLE()
+    btop:toggle()
+end
+
 legendary.setup({
     keymaps = {
+        -- Motion
+        { "gh", "^", description = "Line start" },
+        { "gl", "$", description = "Line end" },
+
         -- Telescope functions
-        {"<leader>ff", builtin.find_files, description="Find files"},
-        {"<leader>fr", builtin.oldfiles, description="Recent files"},
-        {"<leader>fg", builtin.live_grep, description="Live grep"},
-        {"<leader>fs", builtin.grep_string, description="Grep string under cursor"},
-        {"<leader>fh", builtin.help_tags, description="Help tags"},
+        { "<leader>ff", builtin.find_files, description = "Find files" },
+        { "<leader>fr", builtin.oldfiles, description = "Recent files" },
+        { "<leader>fg", builtin.live_grep, description = "Live grep" },
+        { "<leader>fs", builtin.grep_string, description = "Grep string under cursor" },
+        { "<leader>fh", builtin.help_tags, description = "Help tags" },
 
-        -- Git 
-        {"<leader>g", _LAZYGIT_TOGGLE, description="Lazygit"},
+        -- Git
+        { "<leader>g", _LAZYGIT_TOGGLE, description = "Lazygit" },
+        -- btop
+        { "<leader>b", _BTOP_TOGGLE, description = "btop" },
+        -- Nvim-tree
+        { "<leader>e", ":NvimTreeToggle<CR>", description = "File explorer" },
 
-        -- Illuminate 
+        -- LSP
+        { "gd", vim.lsp.buf.definition, description = "Definition" },
+        { "gD", vim.lsp.buf.declaration, description = "Declaration" },
+        { "gt", vim.lsp.buf.type_definition, description = "Type definition" },
+        { "gi", vim.lsp.buf.implementation, description = "Implementation" },
+        { "gr", builtin.lsp_references, description = "References" },
+        { "<leader>k", vim.lsp.buf.hover, description = "Hover" },
+        { "<leader>rn", vim.lsp.buf.rename, description = "Rename" },
+        { "<leader>ca", vim.lsp.buf.code_action, description = "Coda action" },
+        { "<leader>d", builtin.diagnostics, description = "Diagnostics" },
+        { "go", vim.diagnostic.open_float, description = "Open float diagnostic" },
+
+        -- -- Illuminate
+        -- {
+        --     "<a-n>",
+        --     function()
+        --         illuminate.next_reference({ wrap = true })
+        --     end,
+        --     opts = { noremap = true },
+        --     description = "Next References",
+        -- },
+        -- {
+        --     "<a-p>",
+        --     function()
+        --         illuminate.next_reference({ reverse = true, wrap = true })
+        --     end,
+        --     opts = { noremap = true },
+        --     description = "Previous References",
+        -- },
+
+    },
+    commands = {
         {
-            "<a-n>",
+            ":Format",
             function()
-                illuminate.next_reference({wrap=true})
+                vim.lsp.buf.format({ async = true })
             end,
-            opts={noremap=true},
-            description="Next References",
+            description = "Format file"
         },
-        {
-            "<a-p>",
-            function()
-                illuminate.next_reference({reverse=true, wrap=true})
-            end,
-            opts={noremap=true},
-            description="Previous References",
-        },
-        {"<leader>e", ":NvimTreeToggle<CR>", description="File explorer"},
-
     },
 })
 
 local pluginKeys = {}
 
--- lsp 
+-- lsp
 pluginKeys.lsp_keymaps = function(bufnr)
     local mapbuf = function(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)

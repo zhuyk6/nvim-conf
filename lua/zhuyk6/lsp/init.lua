@@ -32,25 +32,26 @@ require('lsp-setup').setup({
     -- gi = 'lua require"telescope.builtin".lsp_implementations()',
     -- gr = 'lua require"telescope.builtin".lsp_references()',
     mappings = {
-        gd             = "lua vim.lsp.buf.definition()",
-        gD             = "lua vim.lsp.buf.declaration()",
-        gi             = "lua vim.lsp.buf.implementation()",
-        gt             = "lua vim.lsp.buf.type_definition()",
-        gr             = "lua vim.lsp.buf.references()",
-        K              = "lua vim.lsp.buf.hover()",
-        ['<C-k>']      = "lua vim.lsp.buf.signature_help()",
-        go             = "lua vim.diagnostic.open_float()",
-        gj             = "lua vim.diagnostic.goto_next()",
-        gk             = "lua vim.diagnostic.goto_prev()",
-        ['<leader>rn'] = "lua vim.lsp.buf.rename()",
-        ['<leader>ca'] = "lua vim.lsp.buf.code_action()",
-        -- ['<leader>f']  = "lua vim.lsp.buf.format({async = true})",
+        -- gd             = "lua vim.lsp.buf.definition()",
+        -- gD             = "lua vim.lsp.buf.declaration()",
+        -- gi             = "lua vim.lsp.buf.implementation()",
+        -- gt             = "lua vim.lsp.buf.type_definition()",
+        -- gr             = "lua vim.lsp.buf.references()",
+        -- ['<leader>k']  = "lua vim.lsp.buf.hover()",
+        -- ['<leader>d']  = 'lua require"telescope.builtin".diagnostics()',
+        -- ['<C-k>']      = "lua vim.lsp.buf.signature_help()",
+        -- go             = "lua vim.diagnostic.open_float()",
+        -- -- gj             = "lua vim.diagnostic.goto_next()",
+        -- -- gk             = "lua vim.diagnostic.goto_prev()",
+        -- ['<leader>rn'] = "lua vim.lsp.buf.rename()",
+        -- ['<leader>ca'] = "lua vim.lsp.buf.code_action()",
+        -- ['<leader>fmt']  = "lua vim.lsp.buf.format({async = true})",
     },
     -- Global on_attach
     on_attach = function(client, bufnr)
         -- Support custom the on_attach function for global
         -- Formatting on save as default
-        require('lsp-setup.utils').format_on_save(client)
+        -- require('lsp-setup.utils').format_on_save(client)
     end,
     -- Global capabilities
     capabilities = vim.lsp.protocol.make_client_capabilities(),
@@ -70,17 +71,38 @@ require('lsp-setup').setup({
         },
         clangd = require("lsp-setup.clangd_extensions").setup({}),
 
-        -- rust_analyzer = {
-        --     settings = {
-        --         ['rust-analyzer'] = {
-        --             cargo = {
-        --                 loadOutDirsFromCheck = true,
-        --             },
-        --             procMacro = {
-        --                 enable = true,
-        --             },
-        --         },
-        --     },
-        -- },
+        rust_analyzer = require("lsp-setup.rust-tools").setup({})
     },
 })
+
+-- diagnostic config
+local signs = {
+    { name = "DiagnosticSignError", text = "" },
+    { name = "DiagnosticSignWarn", text = "" },
+    { name = "DiagnosticSignHint", text = "" },
+    { name = "DiagnosticSignInfo", text = "" },
+}
+
+for _, sign in ipairs(signs) do
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+end
+
+local config = {
+    virtual_text = false, -- disable virtual text
+    signs = {
+        active = signs, -- show signs
+    },
+    update_in_insert = false,   -- diagnostic when insert to normal
+    underline = true,
+    severity_sort = true,
+    float = {
+        focusable = true,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+    },
+}
+
+vim.diagnostic.config(config)
