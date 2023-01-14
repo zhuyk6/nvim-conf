@@ -124,6 +124,7 @@ return packer.startup(function(use)
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-nvim-lua"
     use "onsails/lspkind.nvim" -- adds vscode-like pictograms to neovim built-in lsp
+    use "hrsh7th/cmp-nvim-lsp-signature-help" -- "function signature help"
 
     -- snippets
     use "L3MON4D3/LuaSnip" --snippet engine
@@ -163,6 +164,10 @@ return packer.startup(function(use)
         config = function()
             require("zhuyk6.conf.telescope")
         end
+    }
+    use {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
     }
 
     --    -- LSP saga
@@ -208,6 +213,13 @@ return packer.startup(function(use)
         'stevearc/dressing.nvim', -- Improve the default vim.ui interfaces
         config = function()
             require("zhuyk6.conf.dressing")
+        end
+    }
+    -- Git decorations
+    use {
+        'lewis6991/gitsigns.nvim',
+        config = function()
+            require('gitsigns').setup()
         end
     }
 
