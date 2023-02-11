@@ -71,7 +71,9 @@ require('lsp-setup').setup({
         },
         clangd = require("lsp-setup.clangd_extensions").setup({}),
 
-        rust_analyzer = require("lsp-setup.rust-tools").setup({})
+        rust_analyzer = require("lsp-setup.rust-tools").setup({}),
+
+        cmake_language_server = {},
     },
 })
 
@@ -92,7 +94,9 @@ local config = {
     signs = {
         active = signs, -- show signs
     },
-    update_in_insert = false,   -- diagnostic when insert to normal
+    -- false: diagnostic update when insert to normal
+    -- true:  diagnostic update in insert mode
+    update_in_insert = false,
     underline = true,
     severity_sort = true,
     float = {

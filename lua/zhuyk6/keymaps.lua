@@ -105,8 +105,8 @@ end
 legendary.setup({
     keymaps = {
         -- Motion
-        { "gh", "^", description = "Line start" },
-        { "gl", "$", description = "Line end" },
+        { "gh", { n = "^", v = "^" }, description = "Line start" },
+        { "gl", { n = "$", v = "$" }, description = "Line end" },
 
         -- Telescope functions
         { "<leader>ff", builtin.find_files, description = "Find files" },
